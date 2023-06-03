@@ -61,7 +61,29 @@ export const calendarReducer = (state = initialState, action) => {
         //si no regreso e,o sea,el evento  tal como esta
       };
 
+
+    //el delete se realiza sobre un evento seleccionado en el arraglos events
+    case types.eventDeleted:
+      return {
+        ...state,
+        /*II*/ events:
+          //el event seleccionado se modifica
+          //luego el id del event seleccionado se busca dentro del arreglo events
+          //cdo se encuentra un match en el id entonces se reescribe el event dentro del arreglo events
+          state.events.filter(
+            e => ( e.id !== state.activeEvent.id) ),
+        //map toma como argumento el evento tal como está, representado con e
+        //si el id del evento e es === al id del evento que se modifica en el modal
+        //regreso la info modificada  action.payload
+        //si no regreso e,o sea,el evento  tal como esta
+        activeEvent:null
+      };
+
+
+
     default:
       return state;
   }
 };
+
+//array.filter(obj => obj !== obj2)

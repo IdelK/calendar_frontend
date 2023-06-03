@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { uiOpenModal } from "../../R_actions/modal";
 import { eventSetActive } from "../../R_actions/events";
 import { AddNewFab } from "../ui/AddNewFab";
+import { DeleteEvent } from "../ui/DeleteEvent";
 
 export const CalendarScreen = () => {
   //cdo se recarga el navegador conserve el estado(semana,dia,agenda) que estaba,de no ser asi,vuelve a mes.Se usa localStorage
@@ -20,7 +21,7 @@ export const CalendarScreen = () => {
   );
 
   const dispatch = useDispatch();
-  const { events } = useSelector((state) => state.calendar);
+  const { events, activeEvent } = useSelector((state) => state.calendar);
 
   /*1*/
   const eventStyleGetter = (event, start, end, isSelected) => {
@@ -50,6 +51,11 @@ export const CalendarScreen = () => {
     localStorage.setItem("lastView", e);
   };
 
+  /*4*/
+  const onSelectSlot = () => {
+    dispatch(eventSetActive());
+  };
+
   return (
     <div className="calendar-screen">
       <Navbar />
@@ -61,19 +67,18 @@ export const CalendarScreen = () => {
         endAccessor="end"
         messages={messages}
         eventPropGetter={eventStyleGetter}
-        components={{
-          event: CalendarEvent,
-        }}
+        components={{event: CalendarEvent}}
         onDoubleClickEvent={onDoubleClick}
         onSelectEvent={onSelectedEvent}
         onView={onViewChange}
-        onview={lastView}
-        //onSelecteSlot={onSelectSlot}  poner el stilo anterior del evento y action eventSetActive a false o null
+        view={lastView}
+        onSelectSlot={onSelectSlot}
+        selectable={true}
       />
 
       <CalendarModal />
-
       <AddNewFab />
+      {activeEvent && <DeleteEvent />}
     </div>
   );
 };
