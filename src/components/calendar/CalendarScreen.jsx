@@ -2,7 +2,7 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 
-import { Navbar } from "../ui/Navbar";
+import { Navbar } from "../ui/Navbar"; 
 import { messages } from "../../helpers/calendar-messages-es";
 import { CalendarEvent } from "../../components/calendar/CalendarEvent";
 import { useState } from "react";
