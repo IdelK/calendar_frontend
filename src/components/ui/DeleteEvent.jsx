@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { eventDeleted } from "../../R_actions/events";
+import { eventDeleted } from "../../R_actions/eventsActions";
 
 export const DeleteEvent = () => {
   const dispatch = useDispatch();

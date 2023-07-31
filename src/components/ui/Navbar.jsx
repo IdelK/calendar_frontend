@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
-import { startLogout } from "../../R_actions/auth";
+import { startLogout } from "../../R_actions/authActions";
 
 export const Navbar = () => {
   const navigate = useNavigate();

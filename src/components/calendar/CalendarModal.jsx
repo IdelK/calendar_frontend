@@ -8,12 +8,12 @@ import "react-calendar/dist/Calendar.css";
 import "react-clock/dist/Clock.css";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { uiCloseModal } from "../../R_actions/modal";
+import { uiCloseModal } from "../../R_actions/modalActions";
 import {
   eventAddNew,
   eventClearActivateEvent,
   eventUpdated,
-} from "../../R_actions/events";
+} from "../../R_actions/eventsActions";
 import { useEffect } from "react";
 
 //COMPONENTE

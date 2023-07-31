@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "../../hooks/useForm";
 import validator from "validator";
-import { removeError, setError } from "../../R_actions/ui";
-import { startRegisterEmailPassword } from "../../R_actions/auth";
+import { removeError, setError } from "../../R_actions/uiActions";
+import { startRegisterEmailPassword } from "../../R_actions/authActions";
 import { Link } from "react-router-dom";
 
 const initialForm = {

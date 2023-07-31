@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { uiOpenModal } from "../../R_actions/modal";
+import { uiOpenModal } from "../../R_actions/modalActions";
 
 export const AddNewFab = () => {
   const dispatch = useDispatch();

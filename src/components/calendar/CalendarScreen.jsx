@@ -8,8 +8,8 @@ import { CalendarEvent } from "../../components/calendar/CalendarEvent";
 import { useState } from "react";
 import { CalendarModal } from "./CalendarModal";
 import { useDispatch, useSelector } from "react-redux";
-import { uiOpenModal } from "../../R_actions/modal";
-import { eventSetActive } from "../../R_actions/events";
+import { uiOpenModal } from "../../R_actions/modalActions";
+import { eventSetActive } from "../../R_actions/eventsActions";
 import { AddNewFab } from "../ui/AddNewFab";
 import { DeleteEvent } from "../ui/DeleteEvent";
 

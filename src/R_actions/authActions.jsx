@@ -1,7 +1,7 @@
 import Swal from "sweetalert2";
 import { firebase, googleAuthProvider } from "../firebase/firebase-config";
 import { types } from "../R_types/types";
-import { finishLoading, startLoading } from "./ui";
+import { finishLoading, startLoading } from "./uiActions";
 
 //login con usuario y contarseña
 export const startWithLoginEmailPassword = (email, password) => {

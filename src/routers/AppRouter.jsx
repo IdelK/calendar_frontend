@@ -4,7 +4,7 @@ import { CalendarScreen } from "../components/calendar/CalendarScreen";
 import { AuthRouter } from "./AuthRouter";
 import { firebase } from "../firebase/firebase-config";
 import { useDispatch } from "react-redux";
-import { login } from "../R_actions/auth";
+import { login } from "../R_actions/authActions";
 import { PrivateRoute } from "./PrivateRoute";
 import { PublicRoute } from "./PublicRoute";
 

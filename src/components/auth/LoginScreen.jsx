@@ -3,7 +3,7 @@ import { useForm } from "../../hooks/useForm";
 import {
   startWithLoginEmailPassword,
   startLoginGoogle,
-} from "../../R_actions/auth";
+} from "../../R_actions/authActions";
 import { useDispatch, useSelector } from "react-redux";
 
 const initialForm = {
