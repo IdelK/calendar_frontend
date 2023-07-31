@@ -1,7 +1,7 @@
 //los tipos de acciones aparecen en reduxDevTool/Actions
 export const types = {
   login:   "[Auth] Login ",
-  logout: "[Auth] Logout ",
+  logout:  "[Auth] Logout ",
 
   iuSetError:    "[UI] Set Error",
   iuRemoveError: "[UI] Remove Error",
