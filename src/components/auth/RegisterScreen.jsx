@@ -1,9 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useForm } from "../../hooks/useForm";
 import validator from "validator";
-import { removeError, setError } from "../../R_actions/uiActions";
-import { startRegisterEmailPassword } from "../../R_actions/authActions";
+import {
+  removeError,
+  setError,
+  startRegister,
+} from "../../R_actions/authActions";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const initialForm = {
   name: "fredes",
@@ -14,17 +17,20 @@ const initialForm = {
 
 export const RegisterScreen = () => {
   const dispatch = useDispatch();
-  const { msgError } = useSelector((state) => state.ui);
+  const { msgError } = useSelector((state) => state.auth);
 
   // //#_useForm
-  const [formValues, handleInputChange] = useForm(initialForm);
+  const [formValues, setValues] = useState(initialForm);
+  const handleInputChange = ({ target }) => {
+    setValues({ ...formValues, [target.name]: target.value });
+  };
   const { name, email, password, password2 } = formValues;
 
   const handleRegister = (e) => {
     e.preventDefault();
 
     if (isFormValid()) {
-      dispatch(startRegisterEmailPassword(email, password, name));
+      dispatch(startRegister(email, password, name));
     }
   };
   //#end_useForm

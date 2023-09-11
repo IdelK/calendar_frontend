@@ -1,10 +1,8 @@
 import { Link } from "react-router-dom";
-import { useForm } from "../../hooks/useForm";
-import {
-  startWithLoginEmailPassword,
-  startLoginGoogle,
-} from "../../R_actions/authActions";
+import {startLogin} from "../../R_actions/authActions";
+
 import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 
 const initialForm = {
   email: "fredes@gmail.com",
@@ -13,21 +11,22 @@ const initialForm = {
 
 export const LoginScreen = () => {
   const dispatch = useDispatch();
-  const { loading } = useSelector((state) => state.ui);
+  const { loading } = useSelector((state) => state.auth);
 
-  //#_useForm
-  const [formValues, handleInputChange] = useForm(initialForm);
-  const { email, password } = formValues;
+  
+   //#region useForm
+   const [formValues, setValues] = useState(initialForm);
+   const handleInputChange = ({target}) => {
+     setValues({ ...formValues, [target.name]: target.value });
+   };
+   const {email, password } = formValues;
 
-  const handleLogin = (e) => {
+    const handleLogin = (e) => {
     e.preventDefault();
-    dispatch(startWithLoginEmailPassword(email, password));
-  };
-  //#end_useForm
 
-  const handleGoogleLogin = () => {
-    dispatch(startLoginGoogle());
+    dispatch(startLogin(email, password));
   };
+   //#endregion useForm
 
   return (
     <>
@@ -73,7 +72,7 @@ export const LoginScreen = () => {
         <div className=" mb-3">
           <p className="mb-1 mt-3">login with social networks</p>
 
-          <div className="google-btn" onClick={handleGoogleLogin}>
+          <div className="google-btn" >
             <div className="google-icon-wrapper">
               <img
                 className="google-icon"

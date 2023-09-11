@@ -1,24 +1,11 @@
 import { types } from "../R_types/types";
-import moment from "moment/moment";
+//import moment from "moment";
 
 
 const initialState = {
   /*I*/ activeEvent: null,
 
-  /*II*/ events: [
-    {
-      id: new Date().getTime(),
-      title: "cumple",
-      start: moment().toDate(),
-      end:   moment().add(2, "hours").toDate(),
-      bgcolor: "#fafafa", //esto es para marcar el evento por defecto en azul claro
-      notes: "comprar pastel",
-      user: {
-        _id: "123",
-        name: "John",
-      },
-    },
-  ],
+  /*II*/ events: [],
 };
 
 export const calendarReducer = (state = initialState, action) => {
@@ -79,6 +66,12 @@ export const calendarReducer = (state = initialState, action) => {
         activeEvent:null
       };
 
+      case types.eventLoaded:
+        return { 
+          ...state,
+          events : [...action.payload]
+        };
+
 
 
     default:
@@ -87,3 +80,17 @@ export const calendarReducer = (state = initialState, action) => {
 };
 
 //array.filter(obj => obj !== obj2)
+
+ // tipo de event
+ //{
+    //   id: id from BD,
+    //   title: "cumple",
+    //   start: moment().toDate(),
+    //   end:   moment().add(2, "hours").toDate(),
+    //   bgcolor: "#fafafa", //esto es para marcar el evento por defecto en azul claro
+    //   notes: "comprar pastel",
+    //   user: {
+    //     _id: "123",
+    //     name: "John",
+    //   },
+    // },

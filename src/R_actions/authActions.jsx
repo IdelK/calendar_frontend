@@ -1,7 +1,144 @@
+//import Swal from "sweetalert2";
 import Swal from "sweetalert2";
-import { firebase, googleAuthProvider } from "../firebase/firebase-config";
 import { types } from "../R_types/types";
-import { finishLoading, startLoading } from "./uiActions";
+import { fetchConToken, fetchSinToken } from "../helpers/fetch";
+
+//LOGIN
+export const login = (user) => ({
+  type: types.authLogin,
+  payload: user,
+});
+
+//LOGIN_MERN
+export const startLogin = (email, password) => {
+  return async (dispatch) => {
+    const resp = await fetchSinToken("auth", { email, password }, "POST");
+    const body = await resp.json();
+
+    if (body.ok) {
+      localStorage.setItem("token", body.token);
+      //localStorage.setItem("name", body.name);
+     // localStorage.setItem("uid", body.uid);
+
+      localStorage.setItem("token-init-date", new Date().getTime());
+      //  localStorage.setItem("uid", body.uid);
+      dispatch(
+        login({
+          uid: body.uid,
+          name: body.name,
+        })
+      );
+
+      // dispatch(finishLoading());
+    } else {
+      Swal.fire("Error", body.msg, "error");
+
+      // .catch((e) => {
+      //   dispatch(finishLoading());
+      //   Swal.fire("Error", e.message, "error");
+      // });
+    }
+  };
+};
+
+//REGISTRO_MERN
+export const startRegister = (email, password, name) => {
+  return async (dispatch) => {
+    const resp = await fetchSinToken(
+      "auth/new",
+      { email, password, name },
+      "POST"
+    );
+    const body = await resp.json();
+    if (body.ok) {
+      localStorage.setItem("token", body.token);
+      localStorage.setItem("token-init-date", new Date().getTime());
+      dispatch(
+        login({
+          uid: body.uid,
+          name: body.name,
+        })
+      );
+    } else {
+      Swal.fire("Error", body.msg, "error");
+
+      // .catch((e) => {
+      //   dispatch(finishLoading());
+      //   Swal.fire("Error", e.message, "error");
+      // });
+    }
+  };
+};
+
+//****************************//
+//START CHECKING_MERN
+export const startChecking = () => {
+
+  return async (dispatch) => {
+
+    const resp = await fetchConToken("auth/renew");
+    const body = await resp.json();
+
+    if (body.ok) {
+      localStorage.setItem("token", body.token);
+      localStorage.setItem("token-init-date", new Date().getTime());
+
+      dispatch(
+        login({
+          uid: body.uid,//localStorage.getItem("uid"),
+          name:body.name,// localStorage.getItem("name"),
+        })
+      );
+    } else {
+      dispatch(checkingFinish());
+    }
+  };
+};
+
+export function checkingFinish() {
+  return {
+    type: types.authCheckingFinish,
+  };
+}
+
+export const startLogout = () => {
+  return (dispatch) => {
+    localStorage.clear();
+    dispatch(authLogout());
+  };
+};
+
+export const authLogout = () => ({
+  type: types.authLogout,
+});
+
+//**************************************** //*/
+
+//ERRORS
+export const setError = (err) => ({
+  type: types.authSetError,
+  payload: err,
+});
+
+export const removeError = () => ({
+  type: types.authRemoveError,
+});
+
+/*
+
+
+// //LOADING FLAG
+// //START LOADING
+// export const startLoading = () => ({
+//   type: types.authStartLoading,
+// });
+
+// //FINISH LOADING
+// export const finishLoading = () => ({
+//   type: types.authFinishLoading,
+// });
+
+
 
 //login con usuario y contarseña
 export const startWithLoginEmailPassword = (email, password) => {
@@ -54,7 +191,7 @@ export const startLoginGoogle = () => {
 
 //login
 export const login = (uid, name) => ({
-  type: types.login,
+  type: types.authLogin,
   payload: {
     uid,
     name,
@@ -62,55 +199,10 @@ export const login = (uid, name) => ({
 });
 
 
-export const startLogout = () => {
-  return async (dispatch) => {
-    await firebase.auth().signOut();
-    dispatch(logout());
-   
-  };
-};
+
 
 export const logout = () => ({
-  type: types.logout,
+  type: types.authLogout,
 });
 
-
-
-
-
-//en el tutorial estaba el segundo argumento como displayName
-//pero en el authReducer esta como name
-// export const login = (uid,displayName)=>({
-// type :types.login,
-//     payload:{
-//         uid,
-//         displayName
-//     }
-// })
-
-//error
-// WARNING in ./node_modules/firebase/firebase-auth.js Module Warning (from ./node_modules/source-map-loader/dist/cjs.js): Failed to parse source map from 'D:\programacion web\8-journalApp\node_modules\auth\dist\ [synthetic:es6\util\arrayiterator] ' file: Error: ENOENT: no such file o r directory, open 'D:\programacion web\8-journalApp\node_modules\auth\dist\ [synthetic:es6\util\arrayiterator] '
-
-//soluttion
-// If u don't want to see this warnings anymore a possible solution is add this fix editing the
-//file node_modules/react-scripts/config/webpack.config.js,
-//and pasting this after the line performance: false, //here paste// };};
-
-//     ignoreWarnings: [
-//       // Ignore warnings raised by source-map-loader.
-//       // some third party packages may ship miss-configured sourcemaps, that interrupts the build
-//       // See: https://github.com/facebook/create-react-app/discussions/11278#discussioncomment-1780169
-//       /**
-//        *
-//        * @param {import('webpack').WebpackError} warning
-//        * @returns {boolean}
-//        */
-//       function ignoreSourcemapsloaderWarnings(warning) {
-//         return (
-//           warning.module &&
-//           warning.module.resource.includes('node_modules') &&
-//           warning.details &&
-//           warning.details.includes('source-map-loader')
-//         );
-//       },
-//     ],
+*/

@@ -11,7 +11,7 @@ export const Navbar = () => {
   const handleLogout = () => {
     dispatch(startLogout());
 
-    navigate("/login", { replace: true });
+    navigate("/auth/login", { replace: true });
   };
 
   return (

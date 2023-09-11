@@ -5,11 +5,11 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Navbar } from "../ui/Navbar"; 
 import { messages } from "../../helpers/calendar-messages-es";
 import { CalendarEvent } from "../../components/calendar/CalendarEvent";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CalendarModal } from "./CalendarModal";
 import { useDispatch, useSelector } from "react-redux";
 import { uiOpenModal } from "../../R_actions/modalActions";
-import { eventSetActive } from "../../R_actions/eventsActions";
+import { eventSetActive, eventStarLoading } from "../../R_actions/eventsActions";
 import { AddNewFab } from "../ui/AddNewFab";
 import { DeleteEvent } from "../ui/DeleteEvent";
 
@@ -23,11 +23,19 @@ export const CalendarScreen = () => {
   const dispatch = useDispatch();
   const { events, activeEvent } = useSelector((state) => state.calendar);
 
+  /*0*/
+  useEffect(() => {
+    dispatch(eventStarLoading());
+         
+  }, [dispatch])
+  
+
   /*1*/
   const eventStyleGetter = (event, start, end, isSelected) => {
+
     const style = {
       backgroundColor: "#367cf7",
-      borderRadius: "0px",
+      borderRadius: "5px",
       opacity: 0.8,
       display: "block",
       color: "white",
@@ -85,6 +93,7 @@ export const CalendarScreen = () => {
 
 moment.locale("es");
 const localizer = momentLocalizer(moment);
+
 // const events = [
 //   {
 //     title: "cumple",

@@ -10,9 +10,9 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { uiCloseModal } from "../../R_actions/modalActions";
 import {
-  eventAddNew,
   eventClearActivateEvent,
-  eventUpdated,
+  eventStartAddNew,
+  eventStartUpdated,
 } from "../../R_actions/eventsActions";
 import { useEffect } from "react";
 
@@ -34,9 +34,8 @@ export const CalendarModal = () => {
   useEffect(() => {
     if (activeEvent) {
       setFormValues(activeEvent);
-    }
-    else{
-      setFormValues(initialState)
+    } else {
+      setFormValues(initialState);
     }
   }, [activeEvent, setFormValues]);
 
@@ -86,27 +85,27 @@ export const CalendarModal = () => {
       );
     }
 
-    if (title.trim().length < 2) {
+    if (title.trim().length < 2) 
+    {
       return setTitleValid(false);
     }
-    setTitleValid(true);
 
     /**/
-    if (activeEvent) {
-      dispatch(eventUpdated({ ...formValues }));
-    } else {
-      dispatch(
-        eventAddNew({
-          ...formValues,
-          id: new Date().getTime(),
-          user: {
-            _id: "123",
-            name: "John",
-          },
-        })
-      );
+    if (activeEvent) 
+    {
+      dispatch(eventStartUpdated(formValues));
+    } 
+    else 
+    {
+      dispatch(eventStartAddNew(formValues));
     }
+
+    setTitleValid(true);
+    closeModal();//cerrar el modal al guardar//
+
   };
+ 
+
   const closeModal = () => {
     dispatch(uiCloseModal());
     dispatch(eventClearActivateEvent());
@@ -123,7 +122,7 @@ export const CalendarModal = () => {
       overlayClassName="modal-fondo"
       closeTimeoutMS={200}
     >
-      <h1> {(activeEvent) ? "Editar Evento" : "Nuevo evento" } </h1>
+      <h1> {activeEvent ? "Editar Evento" : "Nuevo evento"} </h1>
       <hr />
 
       <form onSubmit={handleOnSubmit} className="container">

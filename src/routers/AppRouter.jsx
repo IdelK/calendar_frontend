@@ -1,38 +1,34 @@
-import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { CalendarScreen } from "../components/calendar/CalendarScreen";
 import { AuthRouter } from "./AuthRouter";
-import { firebase } from "../firebase/firebase-config";
-import { useDispatch } from "react-redux";
-import { login } from "../R_actions/authActions";
+import { useSelector } from "react-redux";
 import { PrivateRoute } from "./PrivateRoute";
 import { PublicRoute } from "./PublicRoute";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { startChecking } from "../R_actions/authActions";
 
-
- 
 export const AppRouter = () => {
   const dispatch = useDispatch();
-  const [checking, setChecking] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const { checking } = useSelector((state) => state.auth);
+  
 
-  //de momento se va a relaizar el loggin con firebase hasta que entre mern
+  //1-cuando  refresco se borra el uid del local storage,es como si al volver a renderizas se lalmara un clear .loaclstorage
+  //en localstorage se borra el token pero no el token-init-date
+  //en el useeffect estoy usando una varable que no esta en local storage que es uid
   useEffect(() => {
-    firebase.auth().onAuthStateChanged(async (user) => {
+    dispatch(startChecking()); 
+    //2-la variable user se debe leer y pasar al start login,
+    //esto permtite que cdo refresh no vaya al login y
+    //cdo logout deben limparse para que vaya al login
 
-      if (user?.uid) {
-        dispatch(login(user.uid, user.displayName));
-        setIsLoggedIn(true);
-       
+    //3-co hago login se genera sate de name,uid y en local se guarda token
+    //cdo hago startChecking con fectConToken se borra todo(??por que )
 
-      } else {
-        setIsLoggedIn(false); 
-      }
+    //el response del endp[oint /renew no da en su body NADQAAAAAAAAAAAAAAAAAAA]
+  }, [dispatch]);
 
-      setChecking(false);
-    });
-  }, [dispatch, setChecking, isLoggedIn]);
-
-  //****!!!!cdo recargo el navegador muestro el cartel espere en vez de LoginScreen!!!***
   if (checking) {
     return <h1>wait...</h1>;
   }
@@ -68,3 +64,33 @@ export const AppRouter = () => {
     </BrowserRouter>
   );
 };
+
+// //const { uid } = useSelector((state) => state.auth);
+// const [checking, setChecking] = useState(true);
+// const [isLoggedIn, setIsLoggedIn] = useState(true);
+// const dispatch =useDispatch();
+// const { uid } = useSelector((state) => state.auth);
+
+// const tokeApp= localStorage.getItem("token");
+
+// console.log(tokeApp);
+// console.log(uid);
+
+// useEffect(() => {
+
+//   if (tokeApp) {
+//     setIsLoggedIn(true);
+//     dispatch(startLogin('fredes@gmail.com','123456'));
+
+//   }
+//   else {
+//     setIsLoggedIn(false);
+//   }
+
+//   setChecking(false);
+// }, [tokeApp,dispatch, setChecking, isLoggedIn]);
+
+// //****!!!!cdo recargo el navegador muestro el cartel espere en vez de LoginScreen!!!***
+// if (checking) {
+//   return <h1>wait...</h1>;
+//

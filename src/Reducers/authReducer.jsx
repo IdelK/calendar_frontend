@@ -1,15 +1,58 @@
 import { types } from "../R_types/types";
 
-export const authReducer = (state = {}, action) => {
-  switch (action.type) {
-    case types.login:
-      return {
-        uid: action.payload.uid,
-        name: action.payload.name,
-      };
-    case types.logout:
-      return {};
+const initialState = {
+  checking: true,
+  uid: null,
+  name: null, 
+  
+};
 
-      default: return state;
+export const authReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case types.authLogin:
+      return {
+        ...state,
+        ...action.payload,
+        checking: false,
+      };
+
+    case types.authCheckingFinish:
+      return {
+        ...state,
+
+        checking: false,
+      };
+
+    case types.authLogout:
+      return {
+        checking: false,
+      };
+
+    case types.authSetError:
+      return {
+        ...state,
+        msgError: action.payload,
+      };
+
+    case types.authRemoveError:
+      return {
+        ...state,
+        msgError: null,
+      };
+
+    // case types.authStartLoading:
+    //   return {
+    //     ...state,
+    //     loading: true,
+    //   };
+
+    // case types.authFinishLoading:
+    //   return {
+    //     ...state,
+    //     loading: false,
+    //   };
+
+    default:
+      return state;
   }
 };

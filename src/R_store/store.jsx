@@ -6,7 +6,6 @@ import {
 } from "redux";
 import thunk from "redux-thunk";
 
-import { uiReducer } from "../Reducers/uiReducer";
 import { authReducer } from "../Reducers/authReducer";
 import { modalReducer } from "../Reducers/modalReducer";
 import { calendarReducer } from "../Reducers/calendarReducer";
@@ -19,7 +18,6 @@ const composeEnhancers =
 //estos reducers aparecen en reduxDevTool/state y son el argumento de useSelector(state=>state.uno_de _estos_reducer)
 const reducers = combineReducers({
   auth: authReducer,
-  ui: uiReducer,
   modal: modalReducer,
   calendar: calendarReducer,
 });
