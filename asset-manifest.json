@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/calendar_frontend/static/css/main.3d2fdb70.css",
+    "main.js": "/calendar_frontend/static/js/main.2b690680.js",
+    "index.html": "/calendar_frontend/index.html",
+    "main.3d2fdb70.css.map": "/calendar_frontend/static/css/main.3d2fdb70.css.map",
+    "main.2b690680.js.map": "/calendar_frontend/static/js/main.2b690680.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3d2fdb70.css",
+    "static/js/main.2b690680.js"
+  ]
+}
